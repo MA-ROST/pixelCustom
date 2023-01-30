@@ -43,28 +43,34 @@ void IoToPPM::read()
 
 	std::string ds;
 	std::getline(inputFile_, ds);
-
-	int w = 0, h = 0;
+	
 	std::string::size_type found = ds.find (' ');
 	if (found!=std::string::npos) {
-		w = stoi(ds.substr (0, found));
-		h = stoi(ds.substr (found+1));
+		pxRes_.x = stoi(ds.substr (0, found));
+		pxRes_.y = stoi(ds.substr (found+1));
 	}
 
-	int number;
+
+	// Bug where non square grid size corrupts image.
+	std::vector <std::vector <bool>> cellStates;
+	std::vector <bool> tempCellArray;
 
 	while (!inputFile_.eof()) {
+		int number;
 		if (inputFile_ >> number) {
-			std::cout << number << "\n";
+			std::cout << number << " ";
+			tempCellArray.push_back (number);
+			if (tempCellArray.size() >= pxRes_.y) {
+				cellStates.push_back (tempCellArray);
+				tempCellArray.clear();
+				std::cout << "\n";
+			}
 		} else {
-			// If reading a number failed, we've hit a delimiter.
 			inputFile_.clear(); // Clear the fail bit.
+			// Assumes perfect user
+			break;
 		}
 	}
-
-
-	std::vector<bool> codes{std::istream_iterator<bool>{inputFile_}, {}};
-
 	inputFile_.close();
 }
 
