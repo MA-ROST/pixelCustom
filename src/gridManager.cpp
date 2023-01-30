@@ -1,5 +1,7 @@
 ﻿#include "gridManager.h"
 
+#include "IoToPPM.h"
+
 void GridManager::setupCells()
 {
 	for (int x = 0; x < Cell::gridSize_.x; ++x) {
@@ -101,6 +103,22 @@ Point<int> GridManager::getClicked(int x, int y)
 			}
 		}
 	}
+}
+
+void GridManager::writeToFile()
+{
+	std::vector<std::vector<bool>> cellStates;
+
+	for (int x = 0; x < Cell::gridSize_.x; ++x) {
+		std::vector<bool> tempCellArray;
+		for (int y = 0; y < Cell::gridSize_.y; ++y) {
+			tempCellArray.emplace_back(cells_[x][y].isLive_);
+		}
+		cellStates.push_back(tempCellArray);
+	}
+	
+	IoToPPM ppm {"data\\pixelArt.ppm", "P1", Cell::gridSize_.x, Cell::gridSize_.y, cellStates};
+	ppm.write();
 }
 
 

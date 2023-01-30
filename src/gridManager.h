@@ -23,6 +23,8 @@ public:
 	void mousePressed(int x, int y);
 	Point<int> getClicked(int x, int y);
 
+	void writeToFile();
+
 	void push();
 	void pop();
 };

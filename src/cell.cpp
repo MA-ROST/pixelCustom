@@ -1,6 +1,6 @@
 ﻿#include "cell.h"
 
-Point<int> Cell::gridSize_{ 6, 6 };
+Point<int> Cell::gridSize_{ 16, 16 };
 
 void Cell::setupPixel(const int& x, const int& y)
 {

@@ -15,7 +15,10 @@ class IoToPPM {
 
 	std::vector<std::vector <bool>> cellStates_;
 public:
-	IoToPPM(std::string filename, std::string pType, int w, int h, std::vector<std::vector <bool>> cellStates);
+	IoToPPM(std::string filename, std::string pType, int w, int h, const std::vector<std::vector <bool>>
+	        & cellStates);
 	void write();
+
+	void pushCellState(const std::vector<std::vector<bool>>& cellStates);
 	
 };
