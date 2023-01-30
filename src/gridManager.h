@@ -24,6 +24,7 @@ public:
 	Point<int> getClicked(int x, int y);
 
 	void writeToFile();
+	void readFromFile();
 
 	void push();
 	void pop();

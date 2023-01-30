@@ -8,6 +8,7 @@
 class IoToPPM {
 
 	std::ofstream outputFile_;
+	std::ifstream inputFile_;
 	std::string filename_ = "pixelArt.ppm";
 	std::string pType_ = "P1";
 
@@ -17,8 +18,24 @@ class IoToPPM {
 public:
 	IoToPPM(std::string filename, std::string pType, int w, int h, const std::vector<std::vector <bool>>
 	        & cellStates);
+	IoToPPM(std::string filename);
 	void write();
+	void read();
 
 	void pushCellState(const std::vector<std::vector<bool>>& cellStates);
+
+	friend std::istream &operator>>(std::istream &in, bool &money) {
+		int a, b;
+		char c;
+
+		// Parses input in the form: $m.n (where m and n are integers)
+		in >> a >> c;
+
+		money = a;
+		std::cout << "hit\n";
+		std::cout << a << "\n";
+
+		return in;
+	}
 	
 };

@@ -5,8 +5,6 @@ void ofApp::setup() {
 
     ofSetBackgroundColor(ofColor::white);
     manager.setupCells();
-
-    manager.writeToFile();
 }
 
 //--------------------------------------------------------------
@@ -30,5 +28,9 @@ void ofApp::keyPressed(int key)
 {
     if (key == 's') {
         manager.writeToFile();
+    }
+
+    if (key == 'r') {
+        manager.readFromFile();
     }
 }

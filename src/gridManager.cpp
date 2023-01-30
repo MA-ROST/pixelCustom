@@ -121,6 +121,13 @@ void GridManager::writeToFile()
 	ppm.write();
 }
 
+void GridManager::readFromFile()
+{
+	IoToPPM ppm {"data\\pixelArt.ppm"};
+
+	ppm.read();
+}
+
 
 void GridManager::push()
 {
