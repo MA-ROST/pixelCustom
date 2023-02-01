@@ -4,6 +4,8 @@
 #include <vector>
 
 #include "ofSystemUtils.h"
+#include "ofFileUtils.h"
+#include "ofUtils.h"
 #include "point.h"
 
 #define BOOL_MATRIX std::vector<std::vector <bool>>
@@ -25,6 +27,7 @@ public:
 	IoToPPM(std::string filename, std::string pType, int w, int h, const BOOL_MATRIX
 	        & cellStates);
 	IoToPPM(std::string filename);
+	
 	void write();
 	ReadPPM read();
 

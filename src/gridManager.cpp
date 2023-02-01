@@ -128,6 +128,7 @@ void GridManager::readToGrid(const ReadPPM& ppm)
 
 	Cell::gridSize_ = ppm.location_;
 
+	// X and Y must be flipped, or the canvas will be rotated
 	for (int x = 0; x < Cell::gridSize_.y; ++x) {
 		std::vector<Cell> tempCellArray;
 		for (int y = 0; y < Cell::gridSize_.x; ++y) {

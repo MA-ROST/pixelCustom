@@ -3,9 +3,6 @@
 #include <string>
 #include <utility>
 
-#include "ofFileUtils.h"
-
-
 IoToPPM::IoToPPM(std::string filename, std::string pType, const int w, const int h,
                  const BOOL_MATRIX& cellStates)
 {
@@ -20,33 +17,36 @@ IoToPPM::IoToPPM(std::string filename) { filename_ = std::move (filename); }
 
 void IoToPPM::write()
 {
+	ofFileDialogResult result = ofSystemSaveDialog ("pixelArt.ppm", "save to:");
+	const std::string ext     = ofFilePath::getFileExt (result.getName());
 
-	ofFileDialogResult result = ofSystemSaveDialog("pixelArt.ppm", "save to:");
+	if (ext == "png") { ofSaveScreen ("yama.png"); }
+	else if (ext == "ppm") {
+		std::ofstream outputFile {filename_};
 
-	if(result.bSuccess) {
-		filename_ = result.getPath();
+		outputFile << pType_ << "\n" << pxRes_.x << " " << pxRes_.y << "\n";
+
+		for (const auto& stateRow : cellStates_) {
+			for (const auto state : stateRow) outputFile << state << " ";
+			outputFile << "\n";
+		}
+
+		outputFile.close();
 	}
-
-	std::ofstream outputFile {filename_};
-
-	outputFile << pType_ << "\n" << pxRes_.x << " " << pxRes_.y << "\n";
-
-	for (const auto& stateRow : cellStates_) {
-		for (const auto state : stateRow) outputFile << state << " ";
-		outputFile << "\n";
+	else {
+		ofSystemAlertDialog ("PLEASE USE EITHER .ppm OR .PNG");
+		ofDirectory file (result.getPath());
+		std::cout << file.remove (false);
 	}
-
-	outputFile.close();
 }
 
 ReadPPM IoToPPM::read()
 {
-	ofFileDialogResult result = ofSystemLoadDialog("fuck",false, 
-		ofFilePath::getCurrentExeDir() + "\\data");
+	ofFileDialogResult result = ofSystemLoadDialog ("fuck", false,
+	                                                ofFilePath::getCurrentExeDir() +
+	                                                "\\data");
 
-	if(result.bSuccess) {
-		filename_ = result.getPath();
-	}
+	if (result.bSuccess) { filename_ = result.getPath(); }
 
 	std::ifstream inputFile {filename_};
 
