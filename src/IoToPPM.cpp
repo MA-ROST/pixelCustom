@@ -41,7 +41,7 @@ ReadPPM IoToPPM::read()
 	std::string res;
 	std::getline (inputFile, res);
 
-	std::string::size_type found = res.find (' ');
+	const std::string::size_type found = res.find (' ');
 	if (found != std::string::npos) {
 		pxRes_.x = stoi (res.substr (0, found));
 		pxRes_.y = stoi (res.substr (found + 1));
@@ -58,7 +58,7 @@ ReadPPM IoToPPM::read()
 			tempCellArray.push_back (number);
 			if (tempCellArray.size() >= pxRes_.y) {
 				cellStates.push_back (tempCellArray);
-				tempCellArray.clear();
+				tempCellArray.clear(); // Allows temp cell array to be reused
 				std::cout << "\n";
 			}
 		}

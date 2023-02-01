@@ -119,12 +119,14 @@ void GridManager::readFromFile()
 void GridManager::readToGrid(const ReadPPM& ppm)
 {
 	cells_.clear();
-	Cell::gridSize_ = PPM.location_;
-	for (int x = 0; x < Cell::gridSize_.x; ++x) {
+
+	Cell::gridSize_ = ppm.location_;
+
+	for (int x = 0; x < Cell::gridSize_.y; ++x) {
 		std::vector<Cell> tempCellArray;
-		for (int y = 0; y < Cell::gridSize_.y; ++y) {
+		for (int y = 0; y < Cell::gridSize_.x; ++y) {
 			Cell tempCell;
-			tempCell.isLive_ = PPM.states_[x][y];
+			tempCell.isLive_ = ppm.states_[y][x];
 			tempCell.setupPixel(x, y);
 			tempCellArray.emplace_back(tempCell);
 		}
