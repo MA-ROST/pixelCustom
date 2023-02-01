@@ -5,7 +5,10 @@
 
 #include "point.h"
 
-class IoToPPM {
+struct ReadPPM {
+	Point <int> location_;
+	std::vector<std::vector <bool>> states_;
+};
 
 class IoToPPM {
 	
@@ -20,7 +23,7 @@ public:
 	        & cellStates);
 	IoToPPM(std::string filename);
 	void write();
-	void read();
+	ReadPPM read();
 
 	void pushCellState(const std::vector<std::vector<bool>>& cellStates);
 

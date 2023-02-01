@@ -30,7 +30,7 @@ void IoToPPM::write()
 	outputFile.close();
 }
 
-void IoToPPM::read()
+ReadPPM IoToPPM::read()
 {
 	std::ifstream inputFile {filename_};
 
@@ -67,6 +67,7 @@ void IoToPPM::read()
 	}
 	inputFile.close();
 
+	return {pxRes_, cellStates};
 }
 
 

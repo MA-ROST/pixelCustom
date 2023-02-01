@@ -2,6 +2,7 @@
 #include <array>
 #include <vector>
 
+#include "IoToPPM.h"
 #include "cell.h"
 
 class GridManager {
@@ -25,6 +26,8 @@ public:
 
 	void writeToFile();
 	void readFromFile();
+
+	void readToGrid(const ReadPPM& PPM);
 
 	void push();
 	void pop();
