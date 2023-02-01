@@ -7,8 +7,8 @@
 
 class IoToPPM {
 
-	std::ofstream outputFile_;
-	std::ifstream inputFile_;
+class IoToPPM {
+	
 	std::string filename_ = "pixelArt.ppm";
 	std::string pType_ = "P1";
 

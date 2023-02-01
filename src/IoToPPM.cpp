@@ -20,7 +20,7 @@ IoToPPM::IoToPPM(std::string filename)
 
 void IoToPPM::write()
 {
-	if (!outputFile_.is_open()) outputFile_.open (filename_);
+	std::ofstream outputFile {filename_};
 
 	outputFile_ << pType_ << "\n";
 	outputFile_ << pxRes_.x << " " << pxRes_.y << "\n";
@@ -35,9 +35,7 @@ void IoToPPM::write()
 
 void IoToPPM::read()
 {
-	if (!inputFile_.is_open()) {
-		inputFile_.open (filename_);
-	}
+	std::ifstream inputFile {filename_};
 
 	std::getline(inputFile_, pType_);
 
