@@ -3,6 +3,9 @@
 #include <string>
 #include <utility>
 
+#include "ofFileUtils.h"
+
+
 IoToPPM::IoToPPM(std::string filename, std::string pType, const int w, const int h,
                  const BOOL_MATRIX& cellStates)
 {
@@ -17,10 +20,16 @@ IoToPPM::IoToPPM(std::string filename) { filename_ = std::move (filename); }
 
 void IoToPPM::write()
 {
+
+	ofFileDialogResult result = ofSystemSaveDialog("pixelArt.ppm", "save to:");
+
+	if(result.bSuccess) {
+		filename_ = result.getPath();
+	}
+
 	std::ofstream outputFile {filename_};
 
-	outputFile << pType_ << "\n";
-	outputFile << pxRes_.x << " " << pxRes_.y << "\n";
+	outputFile << pType_ << "\n" << pxRes_.x << " " << pxRes_.y << "\n";
 
 	for (const auto& stateRow : cellStates_) {
 		for (const auto state : stateRow) outputFile << state << " ";
@@ -32,6 +41,13 @@ void IoToPPM::write()
 
 ReadPPM IoToPPM::read()
 {
+	ofFileDialogResult result = ofSystemLoadDialog("fuck",false, 
+		ofFilePath::getCurrentExeDir() + "\\data");
+
+	if(result.bSuccess) {
+		filename_ = result.getPath();
+	}
+
 	std::ifstream inputFile {filename_};
 
 	// Get canvas type
