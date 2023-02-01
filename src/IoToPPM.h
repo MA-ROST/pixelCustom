@@ -3,11 +3,14 @@
 #include <iostream>
 #include <vector>
 
+#include "ofSystemUtils.h"
 #include "point.h"
+
+#define BOOL_MATRIX std::vector<std::vector <bool>>
 
 struct ReadPPM {
 	Point <int> location_;
-	std::vector<std::vector <bool>> states_;
+	BOOL_MATRIX states_;
 };
 
 class IoToPPM {
@@ -17,30 +20,15 @@ class IoToPPM {
 
 	Point <int> pxRes_;
 
-	std::vector<std::vector <bool>> cellStates_;
+	BOOL_MATRIX cellStates_;
 public:
-	IoToPPM(std::string filename, std::string pType, int w, int h, const std::vector<std::vector <bool>>
+	IoToPPM(std::string filename, std::string pType, int w, int h, const BOOL_MATRIX
 	        & cellStates);
 	IoToPPM(std::string filename);
 	void write();
 	ReadPPM read();
 
-	void pushCellState(const std::vector<std::vector<bool>>& cellStates);
-
-	friend std::istream &operator>>(std::istream &in, bool &money) {
-		int a, b;
-		char c;
-
-		// Parses input in the form: $m.n (where m and n are integers)
-		in >> a >> c;
-
-		money = a;
-		std::cout << "hit\n";
-		std::cout << a << "\n";
-
-		return in;
-	}
-	
+	void pushCellState(const BOOL_MATRIX& cellStates);
 };
 
 

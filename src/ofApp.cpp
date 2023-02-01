@@ -24,13 +24,8 @@ void ofApp::mousePressed(int x, int y, int button) {
     manager.mousePressed (ofGetPreviousMouseX(),ofGetPreviousMouseY());
 }
 
-void ofApp::keyPressed(int key)
+void ofApp::keyPressed(const int key)
 {
-    if (key == 's') {
-        manager.writeToFile();
-    }
-
-    if (key == 'r') {
-        manager.readFromFile();
-    }
+    if (key == 's') manager.writeToFile(); 
+    if (key == 'r') manager.readFromFile(); 
 }

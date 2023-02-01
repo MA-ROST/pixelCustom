@@ -13,7 +13,6 @@ public:
 	void setupCells();
 
 	void draw();
-	void drawCells();
 	void updateCells();
 	bool rowInBound(int row);
 	bool colInBound(int col);
@@ -27,7 +26,7 @@ public:
 	void writeToFile();
 	void readFromFile();
 
-	void readToGrid(const ReadPPM& PPM);
+	void readToGrid(const ReadPPM& ppm);
 
 	void push();
 	void pop();

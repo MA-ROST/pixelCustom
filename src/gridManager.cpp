@@ -15,11 +15,6 @@ void GridManager::setupCells()
 
 void GridManager::draw()
 {
-	drawCells();
-}
-
-void GridManager::drawCells()
-{
 	for (int x = 0; x < Cell::gridSize_.x; ++x) {
 		for (int y = 0; y < Cell::gridSize_.y; ++y) {
 			cells_[x][y].setupPixel(x, y);
@@ -64,12 +59,7 @@ bool GridManager::cellInBound(const int row, const int col)
 
 void GridManager::toggleCell(Point<int> mouseCoord)
 {
-	if (!wasClickTrue_) {
-		cells_[mouseCoord.x][mouseCoord.y].isLive_ = true;
-	}
-	else {
-		cells_[mouseCoord.x][mouseCoord.y].isLive_ = false;
-	}
+	cells_[mouseCoord.x][mouseCoord.y].isLive_ = !wasClickTrue_ ? true : false;
 }
 
 void GridManager::mouseDragged(int x, int y)
@@ -82,7 +72,7 @@ void GridManager::mouseDragged(int x, int y)
 	}
 }
 
-void GridManager::mousePressed(int x, int y)
+void GridManager::mousePressed(const int x, const int y)
 {
 	const Point<int> mouseCoord = getClicked(x, y);
 	if (cellInBound(mouseCoord.x, mouseCoord.y))
@@ -92,7 +82,7 @@ void GridManager::mousePressed(int x, int y)
 	}
 }
 
-Point<int> GridManager::getClicked(int x, int y)
+Point<int> GridManager::getClicked(const int x, const int y)
 {
 	for (int a = 0; a < Cell::gridSize_.x; ++a) {
 		for (int b = 0; b < Cell::gridSize_.y; ++b) {
@@ -105,7 +95,7 @@ Point<int> GridManager::getClicked(int x, int y)
 
 void GridManager::writeToFile()
 {
-	std::vector<std::vector<bool>> cellStates;
+	BOOL_MATRIX cellStates;
 
 	for (int x = 0; x < Cell::gridSize_.x; ++x) {
 		std::vector<bool> tempCellArray;
@@ -126,7 +116,7 @@ void GridManager::readFromFile()
 	readToGrid (ppm.read());
 }
 
-void GridManager::readToGrid(const ReadPPM& PPM)
+void GridManager::readToGrid(const ReadPPM& ppm)
 {
 	cells_.clear();
 	Cell::gridSize_ = PPM.location_;
@@ -141,7 +131,6 @@ void GridManager::readToGrid(const ReadPPM& PPM)
 		cells_.push_back(tempCellArray);
 	}
 }
-
 
 void GridManager::push()
 {

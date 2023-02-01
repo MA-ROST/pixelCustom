@@ -4,7 +4,7 @@
 #include <utility>
 
 IoToPPM::IoToPPM(std::string filename, std::string pType, const int w, const int h,
-                 const std::vector <std::vector <bool>>& cellStates)
+                 const BOOL_MATRIX& cellStates)
 {
 	filename_ = std::move (filename);
 	pType_    = std::move (pType);
@@ -34,8 +34,10 @@ ReadPPM IoToPPM::read()
 {
 	std::ifstream inputFile {filename_};
 
+	// Get canvas type
 	std::getline (inputFile, pType_);
 
+	// Get canvas resolution
 	std::string res;
 	std::getline (inputFile, res);
 
@@ -46,7 +48,7 @@ ReadPPM IoToPPM::read()
 	}
 
 	// Bug where non square grid size corrupts image.
-	std::vector <std::vector <bool>> cellStates;
+	BOOL_MATRIX cellStates;
 	std::vector <bool> tempCellArray;
 
 	while (!inputFile.eof()) {
@@ -71,7 +73,7 @@ ReadPPM IoToPPM::read()
 }
 
 
-void IoToPPM::pushCellState(const std::vector <std::vector <bool>>& cellStates)
+void IoToPPM::pushCellState(const BOOL_MATRIX& cellStates)
 {
 	for (int x = 0; x < pxRes_.y; ++x) {
 		std::vector <bool> tempCellArray;
