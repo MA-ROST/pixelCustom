@@ -13,49 +13,45 @@ IoToPPM::IoToPPM(std::string filename, std::string pType, const int w, const int
 	pushCellState (cellStates);
 }
 
-IoToPPM::IoToPPM(std::string filename)
-{
-	filename_ = std::move (filename);
-}
+IoToPPM::IoToPPM(std::string filename) { filename_ = std::move (filename); }
 
 void IoToPPM::write()
 {
 	std::ofstream outputFile {filename_};
 
-	outputFile_ << pType_ << "\n";
-	outputFile_ << pxRes_.x << " " << pxRes_.y << "\n";
+	outputFile << pType_ << "\n";
+	outputFile << pxRes_.x << " " << pxRes_.y << "\n";
 
 	for (const auto& stateRow : cellStates_) {
-		for (const auto state : stateRow) outputFile_ << state << " ";
-		outputFile_ << "\n";
+		for (const auto state : stateRow) outputFile << state << " ";
+		outputFile << "\n";
 	}
 
-	outputFile_.close();
+	outputFile.close();
 }
 
 void IoToPPM::read()
 {
 	std::ifstream inputFile {filename_};
 
-	std::getline(inputFile_, pType_);
+	std::getline (inputFile, pType_);
 
-	std::string ds;
-	std::getline(inputFile_, ds);
-	
-	std::string::size_type found = ds.find (' ');
-	if (found!=std::string::npos) {
-		pxRes_.x = stoi(ds.substr (0, found));
-		pxRes_.y = stoi(ds.substr (found+1));
+	std::string res;
+	std::getline (inputFile, res);
+
+	std::string::size_type found = res.find (' ');
+	if (found != std::string::npos) {
+		pxRes_.x = stoi (res.substr (0, found));
+		pxRes_.y = stoi (res.substr (found + 1));
 	}
-
 
 	// Bug where non square grid size corrupts image.
 	std::vector <std::vector <bool>> cellStates;
 	std::vector <bool> tempCellArray;
 
-	while (!inputFile_.eof()) {
+	while (!inputFile.eof()) {
 		int number;
-		if (inputFile_ >> number) {
+		if (inputFile >> number) {
 			std::cout << number << " ";
 			tempCellArray.push_back (number);
 			if (tempCellArray.size() >= pxRes_.y) {
@@ -63,13 +59,14 @@ void IoToPPM::read()
 				tempCellArray.clear();
 				std::cout << "\n";
 			}
-		} else {
-			inputFile_.clear(); // Clear the fail bit.
-			// Assumes perfect user
-			break;
+		}
+		else {
+			inputFile.clear(); // Clear the fail bit.
+			break; // Assumes perfect user
 		}
 	}
-	inputFile_.close();
+	inputFile.close();
+
 }
 
 
@@ -81,8 +78,6 @@ void IoToPPM::pushCellState(const std::vector <std::vector <bool>>& cellStates)
 		for (int y = 0; y < pxRes_.x; ++y) {
 			tempCellArray.emplace_back (cellStates[y][x]);
 		}
-		cellStates_.push_back(tempCellArray);
+		cellStates_.push_back (tempCellArray);
 	}
 }
-
-
