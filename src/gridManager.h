@@ -10,6 +10,9 @@ class GridManager {
 	int updateInterval_ = 15;
 	bool wasClickTrue_ = false;
 public:
+	void setup();
+	static void determineGridSize();
+	static void determineWindowRes();
 	void setupCells();
 
 	void draw();

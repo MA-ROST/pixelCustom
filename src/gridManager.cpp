@@ -1,5 +1,37 @@
 ﻿#include "gridManager.h"
 
+
+void GridManager::setup()
+{
+	determineGridSize();
+	determineWindowRes();
+	setupCells();
+}
+
+void GridManager::determineGridSize()
+{
+	std::cout << "How many Rows?: ";
+	std::cin >> Cell::gridSize_.x; // assumes perfect user
+
+	std::cout << "How many Columns?: ";
+	std::cin >> Cell::gridSize_.y; // assumes perfect user
+}
+
+void GridManager::determineWindowRes()
+{
+	constexpr double resizeFactor = 0.75;
+
+	const int cellX = ofGetScreenWidth() * resizeFactor / static_cast<double>(Cell::gridSize_.x);
+	const int cellY = ofGetScreenHeight() * resizeFactor / static_cast<double>(Cell::gridSize_.y);
+
+	Cell::cellSize_ = cellX > cellY ? cellY : cellX;
+
+	const int resX = Cell::gridSize_.x * Cell::cellSize_;
+	const int resY = Cell::gridSize_.y * Cell::cellSize_;
+
+	ofSetWindowShape (resX, resY);
+}
+
 void GridManager::setupCells()
 {
 	for (int x = 0; x < Cell::gridSize_.x; ++x) {

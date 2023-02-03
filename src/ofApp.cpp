@@ -4,7 +4,7 @@
 void ofApp::setup() {
 
     ofSetBackgroundColor(ofColor::white);
-    manager.setupCells();
+    manager.setup();
 }
 
 //--------------------------------------------------------------

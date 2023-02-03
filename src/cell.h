@@ -13,6 +13,7 @@ public:
 	};
 
 	static Point<int> gridSize_;
+	static int cellSize_;
 
 	/**
 	 * @brief sets up the pixel for drawing, and then draws it
